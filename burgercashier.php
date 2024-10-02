@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>An application @The Cashier </title>
+      <script src="cashier1.js" type="text/javascript">
+      </script>
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fjalla+One:wght@400&display=swap">
+     <link rel="stylesheet" type="text/css" href="style1.css" />
+
+
+  </head>
+
+  <body onload="init();">
+<form name="frmCashier" action="process-order.php" method="post">
+  
+    <br>
+    <div class="center-img"> <img src="logo.png" alt="Image of Burger">
+    <table>
+      
+        <td colspan="4">
+          <caption>Welcome to UTPGRILLERS: NEW WORLD BURGER</caption>
+        </td>
+      
+      <tr>
+        <th>Picture</th>
+        <th>Item</th>
+        <th>Price/Unit</th>
+        <th>Quantity</th>
+        <th>Sub Total</th>
+      </tr>
+           <?php
+        $servername = "localhost";
+        $username = "id21285422_amierdatabase";
+        $password = "@Rmatur3";
+        $dbname = "id21285422_amierdb";
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Fetch the latest row from the Menu table
+        $sql = "SELECT * FROM Menu ORDER BY ID DESC LIMIT 1";
+        $result = $conn->query($sql);
+
+        // Display the latest row in the HTML form
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $latestName = $row['Name'];
+            $latestPrice = $row['Price'];
+
+            echo <<<HTML
+            <tr>
+                <td><img src="placeholder_image.jpg" alt="New Item Image"></td>
+                <td>$latestName</td>
+                <td><input type="text" size="10" name="Latest_price" value="$latestPrice" disabled="disabled" class="textfield" /></td>
+                <td><input type="text" size="10" name="latest_quantity" onchange="updateLatestSubtotal();" class="center" /></td>
+                <td><input type="text" size="10" name="Latest_sub_total" disabled="disabled" class="textfield" /></td>
+            </tr>
+HTML; 
+        }else {
+            echo "No data found in the Menu table";
+        }
+
+        // Close the database connection
+        $conn->close();
+        ?>
+       <tr>
+        <td><img src="mcchicken.jpg" alt="Chicken Burger"></td>
+         <td>Chicken Burger</td>
+         <td><input type="text" size="10" name="Chicken_price" disabled="disabled" class = "textfield" /></td>
+         <td><input type="text" size="10" name="chickenb" onchange="Chicken_burger();" class="center" /></td>
+		 <td><input type="text" size="10" name="Chicken_sub_total" disabled="disabled" class = "textfield" /></td>
+       </tr>
+	   <tr>
+      <td><img src="bigmac.jpg" alt="Chicken Burger"></td>
+		 <td>Beef Burger</td>
+		 <td><input type="text" size="10" name="Beef_price" disabled="disabled" class = "textfield" /></td>
+		 <td><input type="text" size="10" name="beefb" onchange="Beef_burger();" class="center" /></td>
+	     <td><input type="text" size="10" name="Beef_sub_total" disabled="disabled" class = "textfield" /></td>
+       </tr>
+	   <tr>
+      <td><img src="lambburger.jpg" alt="Chicken Burger"></td>
+		 <td>Lamb Burger</td>
+		 <td><input type="text" size="10" name="Lamb_price" disabled="disabled" class = "textfield" /></td>
+		 <td><input type="text" size="10" name="lambb" onchange="Lamb_burger();" class="center" /></td>
+	     <td><input type="text" size="10" name="Lamb_sub_total" disabled="disabled"  class = "textfield"/></td>
+       </tr>
+       <tr>
+        <td><img src="mcikan.jpg" alt="Chicken Burger"></td>
+		 <td>Fish Burger</td>
+		 <td><input type="text" size="10" name="Fish_price" disabled="disabled" class = "textfield"/></td>
+		 <td><input type="text" size="10" name="fishb" onchange="Fish_burger();" class="center" /></td>
+	     <td><input type="text" size="10" name="Fish_sub_total" disabled="disabled" class = "textfield"/></td>
+       </tr>
+        <tr>
+          <td><img src="lemoncocola.jpg" alt="Chicken Burger"></td>
+		 <td>Lemon Cola Drink</td>
+		 <td><input type="text" size="10" name="Cola_price" disabled="disabled" class = "textfield"/></td>
+		 <td><input type="text" size="10" name="coke" onchange="Cola_drink();" class="center" /></td>
+	     <td><input type="text" size="10" name="Cola_sub_total" disabled="disabled"class = "textfield" /></td>
+       </tr>
+        <tr>
+          <td><img src="solero.jpg" alt="Chicken Burger"></td>
+		 <td>Solero Lime Drink</td>
+		 <td><input type="text" size="10" name="Lime_price" disabled="disabled"class = "textfield" /></td>
+		 <td><input type="text" size="10" name="lime" onchange="Lime_drink();" class="center" /></td>
+	     <td><input type="text" size="10" name="Lime_sub_total" disabled="disabled"class = "textfield" /></td>
+       </tr>
+        <tr>
+          <td><img src="banana.jpg" alt="Chicken Burger"></td>
+		 <td>Banana Milk</td>
+		 <td><input type="text" size="10" name="Banana_price" disabled="disabled" class = "textfield"/></td>
+		 <td><input type="text" size="10" name="milk" onchange="Banana_milk();" class="center" /></td>
+	     <td><input type="text" size="10" name="Banana_sub_total" disabled="disabled" class = "textfield"/></td>
+       </tr>
+       
+       <tr>
+        <td><img src="air.jpg" alt="Chicken Burger"></td>
+		 <td>Mineral Water</td>
+		 <td><input type="text" size="10" name="Water_price" disabled="disabled" class = "textfield"/></td>
+		 <td><input type="text" size="10" name="water" onchange="Mineral_water();" class="center" /></td>
+	     <td><input type="text" size="10" name="Water_sub_total" disabled="disabled" class = "textfield"/></td>
+       </tr>
+       
+        
+	   <tr>
+		 <th colspan="5">TOTAL</th>
+	     
+       </tr>
+       <tr>
+        <td><input type="text" size="10" name="grand_total" value="0.00" disabled="disabled" class = "textfield" /></td>
+       </tr>
+       <tr>
+        <th colspan="5"> Name </th>
+        
+       </tr>
+       
+       <td colspan = "2 "> <input type="text" id="name" name="name" placeholder="Enter Your Name" class = "textfield"> </td>
+       <tr>
+        <th colspan="5"> Table </th>
+        
+       </tr>
+       <tr>
+        <td colspan = "2"><input type="text" id="table" name="table" placeholder="Enter Your Table Number:" class = "textfield"></td>
+       </tr>
+       <tr>
+         <td colspan="4" align="center">
+          <button class="button-78" role="button" value="Reset" name="reset" onclick="init();">Reset</button>
+
+          <button class="button-78" type="submit" value="Submit" name="Submit">Submit</button>
+
+
+         </td>
+       </tr>
+     </table>
+     </div>
+     </form>
+  </body>
+</html>
