@@ -51,15 +51,12 @@ register.css — Registration page styling
 
 
 Additional Module (izzul)
-
-
 izzul1.html
 izzul2.php
 izzul3.php
 
 
 Styling
-
 
 style1.css — Main stylesheet
 
