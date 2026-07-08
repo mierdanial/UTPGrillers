@@ -1,4 +1,4 @@
-##UTPGrillers
+UTPGrillers
 
 UTPGrillers is a web-based restaurant ordering system built with HTML, CSS, and vanilla JavaScript on the front end, and PHP on the back end. Customers can browse the menu and place orders, while cashiers/admins can manage the menu, view orders, and generate receipts. All order and menu data is stored in a MySQL database via PHP.
 
